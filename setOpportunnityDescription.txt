@@ -1,0 +1,13 @@
+// upon opportunity creation if amount is not null and is greater than 100000 then populate 'HOT Opportunity ' in description
+
+trigger setOpportunityDescription on opportunity (Before insert, before update){
+
+    if((trigger.isBefore) && (trigger.isInsert) || (trigger.isUpdate)){
+         for(opportunity opp :trigger.new){
+		   if(opp.amount != null && opp.amount > 100000){
+		     opp.description = 'Hot Opportunity';
+		   }
+		 }	
+	
+	}
+}
