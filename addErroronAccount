@@ -1,0 +1,22 @@
+// Prevent account record from being edited if record is created 7 days back
+
+// Trigger
+trigger preventEditAccount on Account (before update) {
+    
+    if(trigger.isBefore && trigger.isUpdate){
+        preventEditAccountHAndler.addErroronAccount(Trigger.new);
+   }
+}
+
+// Trigger Handler
+public class preventEditAccountHAndler {
+    
+    public static void addErroronAccount(List <Account> accList ){
+        for(Account acc : accList){
+            if(acc.createdDate > system.today() - 6){
+                acc.addError('Account created 7 days before can not be edited');
+            }
+        }
+    }
+
+}
